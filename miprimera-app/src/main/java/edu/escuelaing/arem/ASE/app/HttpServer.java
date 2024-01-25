@@ -3,6 +3,7 @@ import java.net.*;
  import java.io.*;
 
  public class HttpServer {
+     static String url = "http://www.omdbapi.com/";
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         try {
@@ -27,8 +28,14 @@ import java.net.*;
                     new InputStreamReader(
                             clientSocket.getInputStream()));
             String inputLine, outputLine;
-
+            boolean request=true;
+            String uri ="";
             while ((inputLine = in.readLine()) != null) {
+                if(request){
+                    uri =inputLine.split(" ")[1];
+                    request=false;
+                    System.out.println("@@@@@ " + uri);
+                }
                 System.out.println("Received: " + inputLine);
                 if (!in.ready()) {
                     break;
@@ -46,9 +53,9 @@ import java.net.*;
                     "    </head>\n" +
                     "    <body>\n" +
                     "        <h1>Form with GET</h1>\n" +
-                    "        <form action=\"/hello\">\n" +
-                    "            <label for=\"name\">Name:</label><br>\n" +
-                    "            <input type=\"text\" id=\"name\" name=\"name\" value=\"John\"><br><br>\n" +
+                    "        <form action=\"/Film\">\n" +
+                    "            <label for=\"name\">Title:</label><br>\n" +
+                    "            <input type=\"text\" id=\"name\" name=\"name\" value=\"Film Title\"><br><br>\n" +
                     "            <input type=\"button\" value=\"Submit\" onclick=\"loadGetMsg()\">\n" +
                     "        </form> \n" +
                     "        <div id=\"getrespmsg\"></div>\n" +
@@ -61,32 +68,27 @@ import java.net.*;
                     "                    document.getElementById(\"getrespmsg\").innerHTML =\n" +
                     "                    this.responseText;\n" +
                     "                }\n" +
-                    "                xhttp.open(\"GET\", \"/hello?name=\"+nameVar);\n" +
+                    "                xhttp.open(\"GET\", \"/Film?title=\"+nameVar);\n" +
                     "                xhttp.send();\n" +
                     "            }\n" +
                     "        </script>\n" +
                     "\n" +
-                    "        <h1>Form with POST</h1>\n" +
-                    "        <form action=\"/hellopost\">\n" +
-                    "            <label for=\"postname\">Name:</label><br>\n" +
-                    "            <input type=\"text\" id=\"postname\" name=\"name\" value=\"John\"><br><br>\n" +
-                    "            <input type=\"button\" value=\"Submit\" onclick=\"loadPostMsg(postname)\">\n" +
-                    "        </form>\n" +
-                    "        \n" +
-                    "        <div id=\"postrespmsg\"></div>\n" +
-                    "        \n" +
-                    "        <script>\n" +
-                    "            function loadPostMsg(name){\n" +
-                    "                let url = \"/hellopost?name=\" + name.value;\n" +
-                    "\n" +
-                    "                fetch (url, {method: 'POST'})\n" +
-                    "                    .then(x => x.text())\n" +
-                    "                    .then(y => document.getElementById(\"postrespmsg\").innerHTML = y);\n" +
-                    "            }\n" +
-                    "        </script>\n" +
+
                     "    </body>\n" +
                     "</html>";
-            out.println(outputLine);
+
+            if (uri.startsWith("/Film")){
+                String titleValue = uri.substring(11);
+                outputLine = "HTTP/1.1 200 OK"
+                        + "Content-Type: application/json\r\n"
+                        + "\r\n"
+                        + "\"title\": \"" + titleValue + "\"}";
+                out.println(outputLine);
+            }
+            else if(uri.startsWith("/Client")){
+                out.println(outputLine);
+            }
+
 
             out.close();
             in.close();
