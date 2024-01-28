@@ -54,12 +54,21 @@ en rojo encontramos el directorio, y en azul las posibles formas de ejecutar el 
 tienes dos opciones para ejecutar:
 - darle click izquierdo en la clase HttpServerLab1 y en la opcion "run"
 - en la parte superior derecha encontraras un icono de "play", puedes darle click
-- 
-#### Acceder a la Aplicación Localmente:
+
+
++ ### Acceder a la Aplicación Localmente:
 Abre tu navegador web y accede a la aplicación localmente usando la URL 
 ~~~
 http://localhost:35000/Client
 ~~~
+
+cuando se acceda al link encontraremos esta interface:
+![](images/index.jpg)
+
+para hacer uso del buscador solo se requiere que se brinde el titulo de la pelicula que desea consultar y puede darle click al boton "submit" o precionar la tecla "INTRO"
+
+![](images/shearch.jpg)
+
 
 
 
