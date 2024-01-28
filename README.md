@@ -1,4 +1,4 @@
-# TALLER 1: APLICACIONES DISTRIBUIDAS (HTTP, SOCKETS, HTML, JS,MAVEN, GIT)
+s# TALLER 1: APLICACIONES DISTRIBUIDAS (HTTP, SOCKETS, HTML, JS,MAVEN, GIT)
 Se desarrolará una aplicación eficiente y multiusuario que utiliza la API gratuita de " https://www.omdbapi.com/ " para consultar información de películas. La arquitectura incluye un cliente web asíncrono en el navegador, un servidor que actúa como gateway y una fachada de servicios con caché para evitar consultas repetidas al API. El proyecto se gestiona con Maven, Git y GitHub. El backend está desarrollado exclusivamente en Java, sin utilizar frameworks como SPRING. La interfaz web, implementada en HTML y JS, es simple y no depende de librerías complejas.
 
 ## Requisitos previos
@@ -67,7 +67,7 @@ cuando se acceda al link encontraremos esta interface:
 
 para hacer uso del buscador solo se requiere que se brinde el titulo de la pelicula que desea consultar y puede darle click al boton "submit" o precionar la tecla "INTRO"
 
-![](images/shearch.jpg)
+![](images/search.jpg)
 
 
 
