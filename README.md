@@ -72,7 +72,7 @@ para hacer uso del buscador solo se requiere que se brinde el titulo de la pelic
 
 
 
-##AUTOR
+## AUTOR
 + Cesar David Amaya Gomez
 
 
