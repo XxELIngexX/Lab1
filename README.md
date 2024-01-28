@@ -43,7 +43,13 @@ Ejecuta el proyecto con el siguiente comando:
 ~~~
 (por confirmar)
 ~~~
-
++ ### ejecutarla desde un IDE:
+ára ejecutar desde el IDE puede usar el de su preferencia, entrara en el directorio:
+~~~
+src/main/java/edu.escuelaing.arem.ASE.app
+~~~
+y ejecuta la MainClass "HttpServerLab1"
+![Principal](images/instructivo.jpg)
 #### Acceder a la Aplicación Localmente:
 Abre tu navegador web y accede a la aplicación localmente usando la URL 
 ~~~
