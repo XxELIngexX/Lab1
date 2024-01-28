@@ -5,46 +5,64 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class HttpServerLab1 {
      private static ConcurrentHashMap<String, StringBuffer> cache;
+    /**
+     * Método principal que inicia el servidor HTTP para la búsqueda de películas.
+     * Este servidor acepta conexiones entrantes, procesa las solicitudes de búsqueda de películas
+     * y envía respuestas HTTP correspondientes.
+     *
+     * @param args Los argumentos de línea de comandos (no se utilizan en este caso).
+     * @throws IOException Si ocurre un error durante la ejecución del servidor o al interactuar con los clientes.
+     */
     public static void main(String[] args) throws IOException {
+        // Inicializa el socket del servidor y el caché de respuestas
         ServerSocket serverSocket = null;
         cache = new ConcurrentHashMap<String, StringBuffer>();
 
         try {
+            // Intenta escuchar en el puerto 35000
             serverSocket = new ServerSocket(35000);
         } catch (IOException e) {
+            // Imprime un mensaje de error si no puede escuchar en el puerto
             System.err.println("Could not listen on port: 35000.");
             System.exit(1);
         }
+
+        // Indica que el servidor está listo para recibir conexiones
+        System.out.println("Server ready to receive requests...");
+
+        // Loop principal que espera y procesa las solicitudes de los clientes
         boolean running = true;
         while (running) {
+            // Acepta una conexión entrante del cliente
             Socket clientSocket = null;
             try {
                 System.out.println("Listo para recibir ...");
                 clientSocket = serverSocket.accept();
             } catch (IOException e) {
+                // Imprime un mensaje de error si no se puede aceptar la conexión
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
 
+            // Inicializa los flujos de entrada y salida para la comunicación con el cliente
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(
-                            clientSocket.getInputStream()));
-            String inputLine, outputLine,outputLine1;
+            BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-            boolean request=true;
-            String MovietoSearch ="";
+            // Variables para el procesamiento de la solicitud y la respuesta
+            String inputLine, outputLine, outputLine1;
 
-            //External connection api
+            boolean request = true;
+            String MovietoSearch = "";
+
+            // Objeto para realizar la conexión externa a la API de OMDB
             HttpConnectionLab1 connectionToApi = new HttpConnectionLab1();
             StringBuffer apiResponse = new StringBuffer();
-            boolean giveMovieInfo = false;
 
-
+            // Lee y procesa las líneas de la solicitud HTTP del cliente
             while ((inputLine = in.readLine()) != null) {
-                if(request){
-                    MovietoSearch =inputLine.split(" ")[1];
-                    request=false;
+                if (request) {
+                    MovietoSearch = inputLine.split(" ")[1];
+                    request = false;
                     System.out.println("@@@@@ " + MovietoSearch);
                 }
 
@@ -53,6 +71,7 @@ public class HttpServerLab1 {
                     break;
                 }
             }
+            // Construye la respuesta HTML base para la página de búsqueda de películas
             outputLine = "HTTP/1.1 200 OK\r\n"
                     + "Content-Type:text/html; charset=utf-8\r\n"
                     + "\r\n"
@@ -151,31 +170,34 @@ public class HttpServerLab1 {
                     "    </body>\n" +
                     "</html>";
 
-
+            // Verifica si la solicitud HTTP comienza con "/Film"
             if (MovietoSearch.startsWith("/Film")){
                 String titleValue = MovietoSearch.substring(12);
+                // Verifica si el título de la película está en la caché y si no esta lo agrega
                 if (!cache.containsKey(titleValue)) {
                     apiResponse = connectionToApi.getMovie(titleValue);
                     cache.put(titleValue, apiResponse);
                 } else {
                     apiResponse = cache.get(titleValue);
                 }
+                // Construye la respuesta HTTP para enviar al cliente, pero esta vez con la respuesta a la consulta
                 outputLine1 = "HTTP/1.1 200 OK"
                         + "Content-Type: application/json\r\n"
                         + "\r\n"
                         + apiResponse.toString();
                 out.println(outputLine1);
-                System.out.println(apiResponse.toString());
             }
+            // Si la solicitud HTTP comienza con "/Client" Envía la respuesta HTML base al cliente
             else if(MovietoSearch.startsWith("/Client")){
                 out.println(outputLine);
             }
 
-
+            // Cierra los flujos y el socket del cliente
             out.close();
             in.close();
             clientSocket.close();
         }
+        // Cierra el socket del servidor al finalizar
             serverSocket.close();
 
     }
