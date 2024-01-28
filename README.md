@@ -23,5 +23,61 @@ Sigue estos pasos para configurar el proyecto en tu máquina local y comenzar a 
 ### Clonar el Repositorio:
 Utiliza el siguiente comando para clonar el repositorio desde GitHub:
 ~~~
-git clone https://github.com/tu_usuario/tu-proyecto.git
+git clone https://github.com/XxELIngexX/Lab1.git
 ~~~
+
+### Instalar Dependencias con Maven:
+Navega al directorio del proyecto y ejecuta el siguiente comando para instalar las dependencias utilizando Maven:
+~~~
+mvn clean install
+~~~
+
+### Compilar el Proyecto:
+Una vez que las dependencias estén instaladas, compila el proyecto con el siguiente comando:
+~~~
+mvn compile
+~~~
+
+### Ejecutar el Proyecto:
+Ejecuta el proyecto con el siguiente comando:
+~~~
+(por confirmar)
+~~~
+
+### Acceder a la Aplicación Localmente:
+Abre tu navegador web y accede a la aplicación localmente usando la URL 
+~~~
+http://localhost:35000/Client
+~~~
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
