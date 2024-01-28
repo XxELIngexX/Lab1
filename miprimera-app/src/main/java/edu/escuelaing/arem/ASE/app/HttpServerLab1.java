@@ -165,6 +165,7 @@ public class HttpServerLab1 {
                         + "\r\n"
                         + apiResponse.toString();
                 out.println(outputLine1);
+                System.out.println(apiResponse.toString());
             }
             else if(MovietoSearch.startsWith("/Client")){
                 out.println(outputLine);
