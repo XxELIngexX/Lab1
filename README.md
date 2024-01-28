@@ -63,6 +63,7 @@ http://localhost:35000/Client
 ~~~
 
 cuando se acceda al link encontraremos esta interface:
+
 ![](images/index.jpg)
 
 para hacer uso del buscador solo se requiere que se brinde el titulo de la pelicula que desea consultar y puede darle click al boton "submit" o precionar la tecla "INTRO"
